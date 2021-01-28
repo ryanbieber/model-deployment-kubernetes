@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pull-model-push
+spec:
+  containers:
+  - name: push
+    image: push-image:latest
+    volumeMounts:
+    - name: shared-data
+      mountPath: "/src/data"
+  # These containers are run during pod initialization
+  initContainers:
+  - name: pull
+    image: pull-image:latest
+    volumeMounts:
+    - name: shared-data
+      mountPath: "/src/data"
+  - name: model
+    image: model-image:latest
+    volumeMounts:
+    - name: shared-data
+      mountPath: "/src/data"
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  restartPolicy: Never

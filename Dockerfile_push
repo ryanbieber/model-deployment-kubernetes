@@ -1,0 +1,48 @@
+## image name for R
+FROM rocker/tidyverse:4.0.0
+
+# update some packages
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    file \
+    libxml2-dev \
+    libpq-dev \
+    zlib1g-dev \
+    default-jdk \
+    default-jre \
+    libbz2-dev \
+    libpcre3-dev \
+    liblzma-dev \
+    libcurl4-openssl-dev \
+    libssl-dev
+
+
+# copy the setup script, run it, then delete it
+COPY push/src/setup.R /
+RUN Rscript setup.R && rm setup.R
+
+RUN mkdir /src
+
+RUN mkdir /src/data
+
+# copy all the other R files.
+COPY push/src /src
+
+
+WORKDIR /src
+
+ENV DBNAME 
+ENV PORT 
+ENV HOSTNAME 
+ENV USERNAME 
+ENV PASSWORD 
+ENV SCHEMA -c search_path=
+#Fill out your name here for the slack integration to check
+ENV NAME Ryan-Bieber
+#table name you want to create must be a new table
+ENV TABLE ryans-table
+
+
+## run script
+ENTRYPOINT Rscript -e "source('./main.R')"
+
