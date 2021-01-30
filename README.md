@@ -74,7 +74,9 @@ To get a local copy up and running follow these simple example steps.
 ### Installation
 
 1. Clone the repo
-2. Done
+2. Put the repo path into your pipeline and make sure your build and deploy shell scripts are able to be called.
+3. Make sure the images that are referenced are the right ones along with where the containers are being mounted. 
+This will allow you to use any language as well as anything else that you want to run sequentially in containers.s
 
 <!-- USAGE EXAMPLES -->
 ## Usage
