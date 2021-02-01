@@ -21,9 +21,6 @@ dockerlint -f ${DOCKER_ROOT}/${DOCKER_FILE_PUSH}
 echo "Linting Done"
 
 
-echo -e "Existing images in registry"
-ibmcloud cr images
-
 echo "Building Images"
 
 set -x
